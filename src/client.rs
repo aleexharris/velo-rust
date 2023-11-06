@@ -114,12 +114,12 @@ impl Client {
             Err(InvalidInput)
         }
     }
-    pub fn connect(&self) -> Client {  // maybe this should return Result<Client, Client> where Ok is Online and Err is Offline?
+    pub fn connect(&self) -> Result<Client, Client> {  //Ok(Client::online) Err(Client::Offline)
         let new_client = Client::Online { api_key: self.api_key().clone(), req_client: self.build_request_client(self.api_key()), };
         if new_client.get_status().unwrap_or("not ok".to_string()) == "ok" {
-            new_client
+            Ok(new_client)
         } else {
-            Client::Offline {api_key: self.api_key().clone()}
+            Err(Client::Offline {api_key: self.api_key().clone()})
         }
     }
     fn build_request_client(&self, api_key: &String) -> reqwest::blocking::Client {
