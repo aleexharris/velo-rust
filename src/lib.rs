@@ -1,5 +1,5 @@
 mod client;
-const API_KEY: &str = "24713d0f1799464792d4a1bb3209f65e";
+const API_KEY: &str = "";
 
 #[cfg(test)]
 mod tests {
